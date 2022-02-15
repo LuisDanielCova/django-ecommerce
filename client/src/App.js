@@ -1,14 +1,13 @@
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
-import { NewProductsList } from "./components/products/NewProductsList";
+import { ProductDetail } from "./components/products/ProductDetail";
 
 function App() {
   return (
     <div>
       <Navbar></Navbar>
       <main className="container m-5">
-        <p>Home</p>
-        <NewProductsList></NewProductsList>
+        <ProductDetail></ProductDetail>
       </main>
       <Footer></Footer>
     </div>
