@@ -1,8 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../App";
 
 export const Navbar = () => {
+  const [productsInCart, setProductsInCart] = useState(0);
   const { cart } = useContext(CartContext);
+
+  useEffect(() => {
+    if (cart.items.length > 0) {
+      setProductsInCart(cart.items.length);
+    }
+  }, [cart.items]);
 
   return (
     <header className="p-3 bg-dark text-white">
@@ -18,7 +25,7 @@ export const Navbar = () => {
           <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li>
               <a href="/" className="nav-link px-2 text-white">
-                Ecommerce
+                The Wardrobe
               </a>
             </li>
             <li>
@@ -38,7 +45,7 @@ export const Navbar = () => {
               Log in
             </button>
             <button type="button" className="btn btn-warning">
-              <i className="bi bi-cart"></i> Cart ({cart.items.length})
+              <i className="bi bi-cart"></i> Cart ({productsInCart})
             </button>
           </div>
         </div>

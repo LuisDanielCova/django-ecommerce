@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CartContext } from "../../App";
 
 export const ProductDetail = () => {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const { cart, setCart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const { category_slug, product_slug } = useParams();
 
@@ -39,6 +40,7 @@ export const ProductDetail = () => {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    navigate(0);
   };
 
   return (
@@ -68,6 +70,7 @@ export const ProductDetail = () => {
                 className="form-control"
                 placeholder="1"
                 min={1}
+                value={quantity}
                 onChange={(e) => {
                   const { value } = e.target;
                   setQuantity(value);

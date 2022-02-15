@@ -16,6 +16,7 @@ function App() {
     } else {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

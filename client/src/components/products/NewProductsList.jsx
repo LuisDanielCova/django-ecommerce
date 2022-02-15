@@ -21,7 +21,7 @@ export const NewProductsList = () => {
   return (
     <div className="container">
       <div className="row">
-        <p className="lead fs-2 fw-bold">New Products</p>
+        <h2 className="display-5 text-center fw-normal">New Products</h2>
         {products.map((product) => {
           return (
             <div className="col-xl-3 my-2" key={product.id}>
