@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export const ProductDetail = () => {
   const [product, setProduct] = useState({});
 
+  const { category_slug, product_slug } = useParams();
+
   useEffect(() => {
     const getProduct = async () => {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/v1/products/winter/heavy-winter-jacket/`
+        `http://127.0.0.1:8000/api/v1/products/${category_slug}/${product_slug}/`
       );
       setProduct(response.data);
     };
     getProduct();
-  }, []);
+  }, [category_slug, product_slug]);
 
   return (
     <div className="container">
@@ -25,6 +28,7 @@ export const ProductDetail = () => {
               src={product.get_image}
               className="img-thumbnail"
               width={400}
+              alt=""
             />
             <p className="fs-4 my-1">Product Description:</p>
             <p className="lead">{product.description}</p>

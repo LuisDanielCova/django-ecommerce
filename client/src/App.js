@@ -1,16 +1,17 @@
-import { Navbar } from "./components/layout/Navbar";
-import { Footer } from "./components/layout/Footer";
-import { ProductDetail } from "./components/products/ProductDetail";
+import { Routes, Route } from "react-router-dom";
+import { Detail } from "./pages/Detail";
+import { Home } from "./pages/Home";
 
 function App() {
   return (
-    <div>
-      <Navbar></Navbar>
-      <main className="container m-5">
-        <ProductDetail></ProductDetail>
-      </main>
-      <Footer></Footer>
-    </div>
+    <Routes>
+      <Route exact path="/" element={<Home />} />
+      <Route
+        exact
+        path="products/:category_slug/:product_slug"
+        element={<Detail />}
+      />
+    </Routes>
   );
 }
 
