@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { CartContext } from "../../App";
 
 export const ProductDetail = () => {
   const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const { cart, setCart } = useContext(CartContext);
 
   const { category_slug, product_slug } = useParams();
 
@@ -16,6 +19,27 @@ export const ProductDetail = () => {
     };
     getProduct();
   }, [category_slug, product_slug]);
+
+  const addToCart = (product, quantity) => {
+    const alreadyInCart = cart.items.filter(
+      (item) => item.product.id === product.id
+    );
+
+    if (alreadyInCart.length > 0) {
+      alreadyInCart[0].quantity =
+        parseInt(alreadyInCart[0].quantity) + parseInt(quantity);
+    } else {
+      const item = {
+        product,
+        quantity,
+      };
+
+      cart.items.push(item);
+      setCart(cart);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
 
   return (
     <div className="container">
@@ -44,11 +68,18 @@ export const ProductDetail = () => {
                 className="form-control"
                 placeholder="1"
                 min={1}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setQuantity(value);
+                }}
               />
               <button
                 className="btn btn-warning"
                 type="button"
                 id="button-addon1"
+                onClick={() => {
+                  addToCart(product, quantity);
+                }}
               >
                 <i className="bi bi-cart"></i> Add to cart
               </button>

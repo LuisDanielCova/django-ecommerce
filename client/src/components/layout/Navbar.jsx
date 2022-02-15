@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../../App";
 
 export const Navbar = () => {
+  const { cart } = useContext(CartContext);
+
   return (
     <header className="p-3 bg-dark text-white">
       <div className="container">
@@ -19,12 +22,12 @@ export const Navbar = () => {
               </a>
             </li>
             <li>
-              <a href="" className="nav-link px-2 text-white">
+              <a href="/" className="nav-link px-2 text-white">
                 Summer
               </a>
             </li>
             <li>
-              <a href="" className="nav-link px-2 text-white">
+              <a href="/" className="nav-link px-2 text-white">
                 Winter
               </a>
             </li>
@@ -35,7 +38,7 @@ export const Navbar = () => {
               Log in
             </button>
             <button type="button" className="btn btn-warning">
-              <i className="bi bi-cart"></i> Cart
+              <i className="bi bi-cart"></i> Cart ({cart.items.length})
             </button>
           </div>
         </div>
