@@ -33,7 +33,7 @@ export const CategoryList = () => {
                 >
                   {category.name}
                 </a>
-                <span class="badge bg-dark rounded-pill">
+                <span className="badge bg-dark rounded-pill">
                   {category.products.length}
                 </span>
               </li>

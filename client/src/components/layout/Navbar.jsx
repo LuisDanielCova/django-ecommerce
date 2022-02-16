@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../../App";
 
 export const Navbar = () => {
@@ -71,9 +71,9 @@ export const Navbar = () => {
             <button type="button" className="btn btn-outline-light me-2">
               Log in
             </button>
-            <button type="button" className="btn btn-warning">
+            <a type="button" className="btn btn-warning" href={`/cart`}>
               <i className="bi bi-cart"></i> Cart ({productsInCart})
-            </button>
+            </a>
           </div>
         </div>
       </div>
