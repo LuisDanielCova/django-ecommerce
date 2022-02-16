@@ -5,7 +5,7 @@ export const SingleProduct = ({ product }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="col-xl-3 my-2" key={product.id}>
+    <div className="col-xl-3 my-2">
       <img className="img-thumbnail" src={product.get_thumbnail} alt="" />
       <p className="lead">
         <strong>{product.name}</strong>

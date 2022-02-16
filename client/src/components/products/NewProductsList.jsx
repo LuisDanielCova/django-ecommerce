@@ -21,7 +21,7 @@ export const NewProductsList = () => {
       <div className="row">
         <h2 className="display-5 text-center fw-normal">New Products</h2>
         {products.map((product) => {
-          return <SingleProduct product={product}></SingleProduct>;
+          return <SingleProduct key={product.id} product={product} />;
         })}
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Categories } from "./pages/Categories";
 import { CategoryDetail } from "./pages/CategoryDetail";
 import { ProductDetail } from "./pages/ProductDetail";
 import { Home } from "./pages/Home";
+import { Search } from "./pages/Search";
 
 export const CartContext = createContext("");
 
@@ -36,6 +37,7 @@ function App() {
           path="categories/:category_slug/"
           element={<CategoryDetail />}
         />
+        <Route exact path="search/" element={<Search />} />
       </Routes>
     </CartContext.Provider>
   );

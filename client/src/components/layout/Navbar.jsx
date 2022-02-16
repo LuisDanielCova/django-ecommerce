@@ -1,9 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../App";
 
 export const Navbar = () => {
   const [productsInCart, setProductsInCart] = useState(0);
+  const [search, setSearch] = useState("");
   const { cart } = useContext(CartContext);
+  const nagivate = useNavigate();
+
+  const searchQuery = (query) => {
+    if (query !== "") {
+      nagivate(`/search?query=${query}`);
+    }
+  };
 
   useEffect(() => {
     if (cart.items.length > 0) {
@@ -34,7 +43,30 @@ export const Navbar = () => {
               </a>
             </li>
           </ul>
-
+          <div className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+            <div className="input-group ">
+              <input
+                type="search"
+                className="form-control form-control-dark"
+                placeholder="Search..."
+                aria-label="Search"
+                name="query"
+                value={search}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setSearch(value);
+                }}
+              />
+              <button
+                className="btn btn-warning"
+                onClick={() => {
+                  searchQuery(search);
+                }}
+              >
+                <i className="bi bi-search"></i>
+              </button>
+            </div>
+          </div>
           <div className="text-end">
             <button type="button" className="btn btn-outline-light me-2">
               Log in
