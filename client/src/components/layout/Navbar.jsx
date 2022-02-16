@@ -29,13 +29,8 @@ export const Navbar = () => {
               </a>
             </li>
             <li>
-              <a href="/" className="nav-link px-2 text-white">
-                Summer
-              </a>
-            </li>
-            <li>
-              <a href="/" className="nav-link px-2 text-white">
-                Winter
+              <a href="/categories" className="nav-link px-2 text-white">
+                Categories
               </a>
             </li>
           </ul>

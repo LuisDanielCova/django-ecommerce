@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { Categories } from "./pages/Categories";
 import { Detail } from "./pages/Detail";
 import { Home } from "./pages/Home";
 
@@ -28,6 +29,7 @@ function App() {
           path="products/:category_slug/:product_slug"
           element={<Detail />}
         />
+        <Route exact path="categories/" element={<Categories />} />
       </Routes>
     </CartContext.Provider>
   );
