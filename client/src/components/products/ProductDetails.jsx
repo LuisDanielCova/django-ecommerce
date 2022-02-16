@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { CartContext } from "../../App";
 
-export const ProductDetail = () => {
+export const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const { cart, setCart } = useContext(CartContext);

@@ -29,9 +29,24 @@ class ProductDetail(APIView):
 
         return Response(serializer.data)
 
+
 class CategoryList(APIView):
     def get(self, request, format=None):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
-        
+
+        return Response(serializer.data)
+
+
+class CategoryDetail(APIView):
+    def get_object(self, category_slug):
+        try:
+            return Category.objects.get(slug=category_slug)
+        except Category.DoesNotExist:
+            raise Http404
+
+    def get(self, request, category_slug, format=None):
+        category = self.get_object(category_slug)
+        serializer = CategorySerializer(category)
+
         return Response(serializer.data)

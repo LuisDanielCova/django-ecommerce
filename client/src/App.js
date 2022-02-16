@@ -1,7 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Categories } from "./pages/Categories";
-import { Detail } from "./pages/Detail";
+import { CategoryDetail } from "./pages/CategoryDetail";
+import { ProductDetail } from "./pages/ProductDetail";
 import { Home } from "./pages/Home";
 
 export const CartContext = createContext("");
@@ -27,9 +28,14 @@ function App() {
         <Route
           exact
           path="products/:category_slug/:product_slug"
-          element={<Detail />}
+          element={<ProductDetail />}
         />
         <Route exact path="categories/" element={<Categories />} />
+        <Route
+          exact
+          path="categories/:category_slug/"
+          element={<CategoryDetail />}
+        />
       </Routes>
     </CartContext.Provider>
   );

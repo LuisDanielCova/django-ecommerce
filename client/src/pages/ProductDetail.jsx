@@ -1,13 +1,13 @@
 import React from "react";
 import { Navbar } from "../components/layout/Navbar";
-import { ProductDetail } from "../components/products/ProductDetail";
+import { ProductDetails } from "../components/products/ProductDetails";
 import { Footer } from "../components/layout/Footer";
 
-export const Detail = () => {
+export const ProductDetail = () => {
   return (
     <div>
       <Navbar />
-      <ProductDetail />
+      <ProductDetails />
       <Footer />
     </div>
   );
