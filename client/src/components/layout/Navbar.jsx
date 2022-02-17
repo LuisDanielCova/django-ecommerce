@@ -68,7 +68,7 @@ export const Navbar = () => {
             </div>
           </div>
           <div className="text-end">
-            <a className="btn btn-outline-light me-2" href="/login">
+            <a className="btn btn-outline-light me-2" href="/signin">
               Sign in
             </a>
             <a className="btn btn-warning" href={`/cart`}>

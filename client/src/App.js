@@ -8,13 +8,18 @@ import { Search } from "./pages/Search";
 import { Cart } from "./pages/Cart";
 import { LogIn } from "./pages/LogIn";
 import { SignUp } from "./pages/SignUp";
+import axios from "axios";
 
 export const CartContext = createContext("");
+export const TokenContext = createContext("");
 
 function App() {
   const [cart, setCart] = useState({
     items: [],
   });
+
+  const [token, setToken] = useState("");
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("cart")) {
@@ -22,30 +27,48 @@ function App() {
     } else {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
+
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+      setAuthenticated(true);
+    } else {
+      setToken("");
+      setAuthenticated(false);
+    }
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = "Token " + token;
+    } else {
+      axios.defaults.headers.common["Authorization"] = "";
+    }
+  }, [token]);
+
   return (
-    <CartContext.Provider value={{ cart, setCart }}>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="login/" element={<LogIn />} />
-        <Route exact path="signup/" element={<SignUp />} />
-        <Route
-          exact
-          path="products/:category_slug/:product_slug"
-          element={<ProductDetail />}
-        />
-        <Route exact path="categories/" element={<Categories />} />
-        <Route
-          exact
-          path="categories/:category_slug/"
-          element={<CategoryDetail />}
-        />
-        <Route exact path="search/" element={<Search />} />
-        <Route exact path="cart/" element={<Cart />} />
-      </Routes>
-    </CartContext.Provider>
+    <TokenContext.Provider value={{ token, setToken }}>
+      <CartContext.Provider value={{ cart, setCart }}>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="signin/" element={<LogIn />} />
+          <Route exact path="signup/" element={<SignUp />} />
+          <Route
+            exact
+            path="products/:category_slug/:product_slug"
+            element={<ProductDetail />}
+          />
+          <Route exact path="categories/" element={<Categories />} />
+          <Route
+            exact
+            path="categories/:category_slug/"
+            element={<CategoryDetail />}
+          />
+          <Route exact path="search/" element={<Search />} />
+          <Route exact path="cart/" element={<Cart />} />
+        </Routes>
+      </CartContext.Provider>
+    </TokenContext.Provider>
   );
 }
 

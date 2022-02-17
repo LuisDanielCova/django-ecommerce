@@ -1,9 +1,70 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { TokenContext } from "../../App";
 
 export const SignInForm = () => {
-  const handleSubmit = (e) => {
+  const { setToken } = useContext(TokenContext);
+
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+    errors: [],
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    axios.defaults.headers.common["Authorization"] = "";
+
+    localStorage.removeItem("token");
+
+    const formData = {
+      username: user.username,
+      password: user.password,
+    };
+
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/v1/token/login/`,
+        formData
+      );
+
+      if (response.status === 200) {
+        const responseToken = response.data.auth_token;
+
+        setToken(responseToken);
+
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Token ${responseToken}`;
+
+        localStorage.setItem("token", responseToken);
+
+        navigate("/");
+      }
+    } catch (err) {
+      if (err.response) {
+        for (const property in err.response.data) {
+          setUser((previousData) => ({
+            ...previousData,
+            errors: previousData.errors.concat(
+              `${property}: ${err.response.data[property]}`
+            ),
+          }));
+        }
+      } else {
+        setUser((previousData) => ({
+          ...previousData,
+          errors: previousData.errors.concat(
+            "There was an error. Please try again"
+          ),
+        }));
+        console.log(err.data);
+      }
+    }
   };
   return (
     <div className="container my-5">
@@ -26,16 +87,26 @@ export const SignInForm = () => {
               className="form-control rounded-0"
               placeholder="Username"
               style={{ marginBottom: "-1px" }}
+              value={user.username}
+              onChange={(e) => {
+                const { value } = e.target;
+                setUser({ ...user, username: value });
+              }}
             />
             <label htmlFor="username">Username</label>
           </div>
           {/* Password Input */}
           <div className="form-floating">
             <input
-              type="text"
+              type="password"
               name="password"
               className="form-control rounded-0"
               placeholder="Password"
+              value={user.password}
+              onChange={(e) => {
+                const { value } = e.target;
+                setUser({ ...user, password: value });
+              }}
             />
             <label htmlFor="password">Password</label>
           </div>

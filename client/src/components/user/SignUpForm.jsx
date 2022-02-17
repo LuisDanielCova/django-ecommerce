@@ -1,18 +1,79 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SignUpForm = () => {
+  const navigate = useNavigate();
+
   const [newUser, setNewUser] = useState({
     username: "",
     password: "",
     confirmPassword: "",
-    errors: ["test"],
+    errors: [],
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setNewUser({ ...newUser, errors: [] });
 
-    e.preventDefault();
+    if (newUser.username === "") {
+      setNewUser((previousData) => ({
+        ...previousData,
+        errors: previousData.errors.concat("Please insert an username"),
+      }));
+    }
+
+    if (newUser.password === "") {
+      setNewUser((previousData) => ({
+        ...previousData,
+        errors: previousData.errors.concat("Please insert a password"),
+      }));
+    }
+
+    if (newUser.password !== newUser.confirmPassword) {
+      setNewUser((previousData) => ({
+        ...previousData,
+        errors: previousData.errors.concat("The passwords don't match"),
+      }));
+    }
+
+    if (newUser.errors.length === 0) {
+      const formData = {
+        username: newUser.username,
+        password: newUser.password,
+      };
+
+      try {
+        const response = await axios.post(
+          `http://127.0.0.1:8000/api/v1/users/`,
+          formData
+        );
+
+        if (response.status === 201) {
+          alert(`User registered!`);
+          navigate("/signin");
+        }
+      } catch (err) {
+        if (err.response) {
+          for (const property in err.response.data) {
+            setNewUser((previousData) => ({
+              ...previousData,
+              errors: previousData.errors.concat(
+                `${property}: ${err.response.data[property]}`
+              ),
+            }));
+          }
+        } else if (err.message) {
+          setNewUser((previousData) => ({
+            ...previousData,
+            errors: previousData.errors.concat(
+              `There was an error. Please try again`
+            ),
+          }));
+        }
+      }
+    }
   };
 
   return (
@@ -97,7 +158,7 @@ export const SignUpForm = () => {
 
       <p className="lead text-center">
         Already have an account?{" "}
-        <Link className="text-dark" to={"/login"}>
+        <Link className="text-dark" to={"/signin"}>
           Login!
         </Link>
       </p>
