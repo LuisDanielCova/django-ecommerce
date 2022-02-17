@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CartContext } from "../../App";
+import { AuthContext, CartContext } from "../../App";
 
 export const Navbar = () => {
   const [productsInCart, setProductsInCart] = useState(0);
   const [search, setSearch] = useState("");
+  const [button, setButton] = useState("");
   const { cart } = useContext(CartContext);
+  const { authenticated } = useContext(AuthContext);
   const nagivate = useNavigate();
 
   const searchQuery = (query) => {
@@ -19,6 +21,22 @@ export const Navbar = () => {
       setProductsInCart(cart.items.length);
     }
   }, [cart.items]);
+
+  useEffect(() => {
+    if (authenticated) {
+      setButton(
+        <a className="btn btn-outline-light me-2" href="/account">
+          My account
+        </a>
+      );
+    } else {
+      setButton(
+        <a className="btn btn-outline-light me-2" href="/signin">
+          Sign in
+        </a>
+      );
+    }
+  }, [authenticated]);
 
   return (
     <header className="p-3 bg-dark text-white">
@@ -68,9 +86,7 @@ export const Navbar = () => {
             </div>
           </div>
           <div className="text-end">
-            <a className="btn btn-outline-light me-2" href="/signin">
-              Sign in
-            </a>
+            {button}
             <a className="btn btn-warning" href={`/cart`}>
               <i className="bi bi-cart"></i> Cart ({productsInCart})
             </a>

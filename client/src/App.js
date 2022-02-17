@@ -9,9 +9,12 @@ import { Cart } from "./pages/Cart";
 import { LogIn } from "./pages/LogIn";
 import { SignUp } from "./pages/SignUp";
 import axios from "axios";
+import { UserAccount } from "./pages/UserAccount";
+import { AuthProvider } from "./auth/AuthProvider";
 
 export const CartContext = createContext("");
 export const TokenContext = createContext("");
+export const AuthContext = createContext("");
 
 function App() {
   const [cart, setCart] = useState({
@@ -49,24 +52,29 @@ function App() {
   return (
     <TokenContext.Provider value={{ token, setToken }}>
       <CartContext.Provider value={{ cart, setCart }}>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="signin/" element={<LogIn />} />
-          <Route exact path="signup/" element={<SignUp />} />
-          <Route
-            exact
-            path="products/:category_slug/:product_slug"
-            element={<ProductDetail />}
-          />
-          <Route exact path="categories/" element={<Categories />} />
-          <Route
-            exact
-            path="categories/:category_slug/"
-            element={<CategoryDetail />}
-          />
-          <Route exact path="search/" element={<Search />} />
-          <Route exact path="cart/" element={<Cart />} />
-        </Routes>
+        <AuthContext.Provider value={{ authenticated }}>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="signin/" element={<LogIn />} />
+            <Route exact path="signup/" element={<SignUp />} />
+            <Route element={<AuthProvider />}>
+              <Route exact path="account/" element={<UserAccount />} />
+            </Route>
+            <Route
+              exact
+              path="products/:category_slug/:product_slug"
+              element={<ProductDetail />}
+            />
+            <Route exact path="categories/" element={<Categories />} />
+            <Route
+              exact
+              path="categories/:category_slug/"
+              element={<CategoryDetail />}
+            />
+            <Route exact path="search/" element={<Search />} />
+            <Route exact path="cart/" element={<Cart />} />
+          </Routes>
+        </AuthContext.Provider>
       </CartContext.Provider>
     </TokenContext.Provider>
   );
