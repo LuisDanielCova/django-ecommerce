@@ -6,6 +6,8 @@ import { ProductDetail } from "./pages/ProductDetail";
 import { Home } from "./pages/Home";
 import { Search } from "./pages/Search";
 import { Cart } from "./pages/Cart";
+import { LogIn } from "./pages/LogIn";
+import { SignUp } from "./pages/SignUp";
 
 export const CartContext = createContext("");
 
@@ -27,6 +29,8 @@ function App() {
     <CartContext.Provider value={{ cart, setCart }}>
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route exact path="login/" element={<LogIn />} />
+        <Route exact path="signup/" element={<SignUp />} />
         <Route
           exact
           path="products/:category_slug/:product_slug"
