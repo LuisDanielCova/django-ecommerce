@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "dotenv",
     # Local
     "product.apps.ProductConfig",
+    "order.apps.OrderConfig",
 ]
 
 CORS_ALLOWED_ORIGINS = [
