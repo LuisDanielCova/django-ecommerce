@@ -10,6 +10,8 @@ django-cors-headers = "*"
 djoser = "*"
 pillow = "*"
 stripe = "*"
+python-dotenv = "*"
+python-decouple = "*"
 
 [dev-packages]
 

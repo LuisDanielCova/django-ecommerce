@@ -11,6 +11,7 @@ import { SignUp } from "./pages/SignUp";
 import axios from "axios";
 import { UserAccount } from "./pages/UserAccount";
 import { AuthProvider } from "./auth/AuthProvider";
+import { Checkout } from "./pages/Checkout";
 
 export const CartContext = createContext("");
 export const TokenContext = createContext("");
@@ -59,6 +60,7 @@ function App() {
             <Route exact path="signup/" element={<SignUp />} />
             <Route element={<AuthProvider />}>
               <Route exact path="account/" element={<UserAccount />} />
+              <Route exact path="checkout/" element={<Checkout />} />
             </Route>
             <Route
               exact

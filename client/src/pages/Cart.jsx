@@ -7,7 +7,7 @@ export const Cart = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <CartTable></CartTable>
+      <CartTable title={"Cart"} isCheckout={false}></CartTable>
       <Footer></Footer>
     </div>
   );

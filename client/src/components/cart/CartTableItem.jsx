@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../../App";
 
-export const CartTableItem = ({ product, quantity, setTotal }) => {
+export const CartTableItem = ({ product, quantity, setTotal, isCheckout }) => {
   const { cart, setCart } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -36,9 +36,11 @@ export const CartTableItem = ({ product, quantity, setTotal }) => {
       <td>${product.price}</td>
       <td>{quantity}</td>
       <td>${(product.price * quantity).toFixed(2)}</td>
-      <td>
-        <i className="bi bi-x-circle" onClick={deleteItem}></i>
-      </td>
+      {!isCheckout && (
+        <td>
+          <i className="bi bi-x-circle" onClick={deleteItem}></i>
+        </td>
+      )}
     </tr>
   );
 };

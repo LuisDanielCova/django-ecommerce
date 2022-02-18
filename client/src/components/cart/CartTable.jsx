@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../App";
 import { CartTableBody } from "./CartTableBody";
 
-export const CartTable = () => {
+export const CartTable = ({ title, isCheckout }) => {
   const { cart } = useContext(CartContext);
   const [message, setMessage] = useState("");
   const [element, setElement] = useState(React.element);
@@ -13,13 +13,13 @@ export const CartTable = () => {
 
       setElement(<p className="lead">{message}</p>);
     } else {
-      setElement(<CartTableBody cart={cart} />);
+      setElement(<CartTableBody cart={cart} isCheckout={isCheckout} />);
     }
   }, [cart]);
 
   return (
     <div className="container my-5">
-      <h1 className="display-5">Your Cart</h1>
+      <h1 className="display-5">Your {title}</h1>
       <hr />
       {element}
     </div>
