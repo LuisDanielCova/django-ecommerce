@@ -15,6 +15,7 @@ export const CartTable = ({ title, isCheckout }) => {
     } else {
       setElement(<CartTableBody cart={cart} isCheckout={isCheckout} />);
     }
+    // eslint-disable-next-line
   }, [cart]);
 
   return (

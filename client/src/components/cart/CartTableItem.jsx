@@ -10,6 +10,7 @@ export const CartTableItem = ({ product, quantity, setTotal, isCheckout }) => {
     setTotal((previous) => {
       return previous + product.price * quantity;
     });
+    // eslint-disable-next-line
   }, []);
 
   const deleteItem = () => {

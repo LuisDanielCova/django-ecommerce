@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  Children,
+} from "react";
+import { StripeComponent } from "./StripeComponent";
 
 export const CheckoutForm = () => {
+  const stripeRef = useRef();
+
   const [data, setData] = useState({
     cart: {
       items: [],
     },
-    stripe: {},
-    card: {},
     first_name: "",
     last_name: "",
     email: "",
@@ -17,68 +24,71 @@ export const CheckoutForm = () => {
     errors: [],
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const stripeTokenHandler = async (token) => {
+  //   const items = [];
 
-    setData({ ...data, errors: [] });
+  //   for (let i = 0; i < cart.items.length; i++) {
+  //     const item = cart.items[i];
+  //     const obj = {
+  //       product: item.product.id,
+  //       quantity: item.quantity,
+  //       price: item.product.price * item.quantity,
+  //     };
 
-    if (data.first_name === "") {
-      setData((previousData) => ({
-        ...previousData,
-        errors: previousData.errors.concat("Please insert your First Name"),
-      }));
-    }
+  //     items.push(obj);
+  //   }
 
-    if (data.last_name === "") {
-      setData((previousData) => ({
-        ...previousData,
-        errors: previousData.errors.concat("Please insert your Last Name"),
-      }));
-    }
+  //   const newData = {
+  //     first_name: data.first_name,
+  //     last_name: data.last_name,
+  //     email: data.email,
+  //     phone: data.phone,
+  //     address: data.address,
+  //     zipcode: data.zipcode,
+  //     place: data.place,
+  //     items: items,
+  //     stripe_token: token.id,
+  //   };
 
-    if (data.email === "") {
-      setData((previousData) => ({
-        ...previousData,
-        errors: previousData.errors.concat("Please insert your email"),
-      }));
-    }
+  //   try {
+  //     const response = await axios.post(
+  //       "http://127.0.0.1:8000/api/v1/checkout/",
+  //       newData
+  //     );
 
-    if (data.phone === "") {
-      setData((previousData) => ({
-        ...previousData,
-        errors: previousData.errors.concat("Please insert your phone number"),
-      }));
-    }
+  //     if (response.status === 201) {
+  //       const clearCart = { items: [] };
 
-    if (data.address === "") {
-      setData((previousData) => ({
-        ...previousData,
-        errors: previousData.errors.concat("Please insert your address"),
-      }));
-    }
+  //       setCart(clearCart);
+  //       localStorage.setItem("cart", JSON.stringify(clearCart));
 
-    if (data.zipcode === "") {
-      setData((previousData) => ({
-        ...previousData,
-        errors: previousData.errors.concat("Please insert your zipcode"),
-      }));
-    }
+  //       navigate("/cart/success");
+  //     }
+  //   } catch (err) {
+  //     setData((previousData) => ({
+  //       ...previousData,
+  //       errors: previousData.errors.concat(
+  //         "Something went wrong, please try again."
+  //       ),
+  //     }));
 
-    if (data.place === "") {
-      setData((previousData) => ({
-        ...previousData,
-        errors: previousData.errors.concat("Please insert your place"),
-      }));
-    }
-  };
+  //     console.log(err);
+  //   }
+  // };
+
   return (
     <div className="container my-5">
       <h2 className="display-5">Shipping Details</h2>
       <p className="lead text-muted">*All fields are required</p>
       <div className="container-fluid card p-3">
-        <form className="row g-3" onSubmit={handleSubmit}>
+        <form
+          className="row g-3"
+          onSubmit={(e) => {
+            stripeRef.current.handleSubmit(e);
+          }}
+        >
           <div className="col-md-6">
-            <label for="firstName" className="form-label">
+            <label htmlFor="firstName" className="form-label">
               First Name
             </label>
             <input
@@ -94,7 +104,7 @@ export const CheckoutForm = () => {
             />
           </div>
           <div className="col-md-6">
-            <label for="lastName" className="form-label">
+            <label htmlFor="lastName" className="form-label">
               Last Name
             </label>
             <input
@@ -110,7 +120,7 @@ export const CheckoutForm = () => {
             />
           </div>
           <div className="col-md-6">
-            <label for="email" className="form-label">
+            <label htmlFor="email" className="form-label">
               Email
             </label>
             <input
@@ -127,7 +137,7 @@ export const CheckoutForm = () => {
           </div>
 
           <div className="col-md-6">
-            <label for="phone" className="form-label">
+            <label htmlFor="phone" className="form-label">
               Phone
             </label>
             <input
@@ -144,7 +154,7 @@ export const CheckoutForm = () => {
           </div>
 
           <div className="col-md-6">
-            <label for="address" className="form-label">
+            <label htmlFor="address" className="form-label">
               Address
             </label>
             <input
@@ -160,7 +170,7 @@ export const CheckoutForm = () => {
             />
           </div>
           <div className="col-md-4">
-            <label for="place" className="form-label">
+            <label htmlFor="place" className="form-label">
               Place
             </label>
             <input
@@ -177,7 +187,7 @@ export const CheckoutForm = () => {
           </div>
 
           <div className="col-md-2">
-            <label for="zipCode" className="form-label">
+            <label htmlFor="zipCode" className="form-label">
               Zip code
             </label>
             <input
@@ -193,6 +203,8 @@ export const CheckoutForm = () => {
             />
           </div>
 
+          <StripeComponent data={data} setData={setData} ref={stripeRef} />
+
           {data.errors.length !== 0 && (
             <div className="container-fluid alert alert-danger pb-0 my-2">
               <ul className="">
@@ -202,12 +214,6 @@ export const CheckoutForm = () => {
               </ul>
             </div>
           )}
-
-          <div className="col-12">
-            <button type="submit" className="btn btn-warning">
-              Pay with Stripe
-            </button>
-          </div>
         </form>
       </div>
     </div>
