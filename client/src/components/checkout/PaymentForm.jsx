@@ -1,11 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
-import React, {
-  forwardRef,
-  useContext,
-  useImperativeHandle,
-  useState,
-} from "react";
+import React, { forwardRef, useContext, useImperativeHandle } from "react";
 import "./PaymentForm.css";
 import { CartContext } from "../../App";
 import { useNavigate } from "react-router-dom";
@@ -128,7 +123,12 @@ export const PaymentForm = forwardRef(({ data, setData }, ref) => {
 
             if (response.status === 201) {
               alert("Successful payment");
-              navigate("/orders");
+
+              const emptyCart = { items: [] };
+
+              localStorage.setItem("cart", JSON.stringify(emptyCart));
+
+              navigate("/account");
             }
           } catch (error) {
             console.log("Error", error);

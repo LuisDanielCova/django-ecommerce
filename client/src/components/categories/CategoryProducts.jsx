@@ -18,6 +18,7 @@ export const CategoryProducts = () => {
     };
 
     getCategory();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

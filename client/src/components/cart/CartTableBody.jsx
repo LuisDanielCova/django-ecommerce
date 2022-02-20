@@ -40,6 +40,11 @@ export const CartTableBody = ({ cart, isCheckout }) => {
         </tbody>
       </table>
       <hr />
+      {!isCheckout && (
+        <a href="/checkout" className="btn btn-warning col-2">
+          Proceed to Checkout
+        </a>
+      )}
     </div>
   );
 };

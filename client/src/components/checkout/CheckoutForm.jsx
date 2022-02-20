@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  Children,
-} from "react";
+import React, { useState, useRef } from "react";
 import { StripeComponent } from "./StripeComponent";
 
 export const CheckoutForm = () => {
@@ -23,58 +17,6 @@ export const CheckoutForm = () => {
     place: "",
     errors: [],
   });
-
-  // const stripeTokenHandler = async (token) => {
-  //   const items = [];
-
-  //   for (let i = 0; i < cart.items.length; i++) {
-  //     const item = cart.items[i];
-  //     const obj = {
-  //       product: item.product.id,
-  //       quantity: item.quantity,
-  //       price: item.product.price * item.quantity,
-  //     };
-
-  //     items.push(obj);
-  //   }
-
-  //   const newData = {
-  //     first_name: data.first_name,
-  //     last_name: data.last_name,
-  //     email: data.email,
-  //     phone: data.phone,
-  //     address: data.address,
-  //     zipcode: data.zipcode,
-  //     place: data.place,
-  //     items: items,
-  //     stripe_token: token.id,
-  //   };
-
-  //   try {
-  //     const response = await axios.post(
-  //       "http://127.0.0.1:8000/api/v1/checkout/",
-  //       newData
-  //     );
-
-  //     if (response.status === 201) {
-  //       const clearCart = { items: [] };
-
-  //       setCart(clearCart);
-  //       localStorage.setItem("cart", JSON.stringify(clearCart));
-
-  //       navigate("/cart/success");
-  //     }
-  //   } catch (err) {
-  //     setData((previousData) => ({
-  //       ...previousData,
-  //       errors: previousData.errors.concat(
-  //         "Something went wrong, please try again."
-  //       ),
-  //     }));
-
-  //     console.log(err);
-  //   }
-  // };
 
   return (
     <div className="container my-5">
