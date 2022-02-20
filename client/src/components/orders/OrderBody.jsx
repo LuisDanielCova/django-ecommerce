@@ -8,6 +8,7 @@ export const OrderBody = ({ orders }) => {
       <thead>
         <tr>
           <th className="text-center">Order Number</th>
+          <th className="text-center">Order Date</th>
           <th className="text-center">Products in Order</th>
         </tr>
       </thead>

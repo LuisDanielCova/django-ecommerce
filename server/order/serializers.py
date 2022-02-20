@@ -72,4 +72,5 @@ class UserOrderSerializer(serializers.ModelSerializer):
             "stripe_token",
             "items",
             "total",
+            "created_at",
         )

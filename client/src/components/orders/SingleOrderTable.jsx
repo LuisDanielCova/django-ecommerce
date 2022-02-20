@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SingleOrderItemsTable } from "./SingleOrderItemsTable";
 
 export const SingleOrderTable = ({ order }) => {
+  const [date, setDate] = useState("");
+  useEffect(() => {
+    const orderDate = new Date(order.created_at);
+    setDate(orderDate.toLocaleDateString());
+  }, []);
+
   return (
     <tr>
       <td className="lead fw-bold text-center">{order.id}</td>
+      <td className="lead fw-bold text-center">{date}</td>
       <td>
         <table className="table">
           <thead>
