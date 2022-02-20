@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ErrorList } from "../errors/ErrorList";
 
 export const SignUpForm = () => {
   const navigate = useNavigate();
@@ -138,15 +139,8 @@ export const SignUpForm = () => {
           </div>
         </div>
         {/* Error Messages */}
-        {newUser.errors.length !== 0 && (
-          <div className="container-fluid alert alert-danger pb-0 my-2">
-            <ul className="">
-              {newUser.errors.map((error, key) => {
-                return <li key={key}>{error}</li>;
-              })}
-            </ul>
-          </div>
-        )}
+        <ErrorList errors={newUser.errors} />
+
         <div className="container-fluid text-center my-2">
           <input
             type="submit"

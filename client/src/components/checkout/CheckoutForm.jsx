@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { ErrorList } from "../errors/ErrorList";
 import { StripeComponent } from "./StripeComponent";
 
 export const CheckoutForm = () => {
@@ -29,6 +30,7 @@ export const CheckoutForm = () => {
             stripeRef.current.handleSubmit(e);
           }}
         >
+          {/* First Name Input */}
           <div className="col-md-6">
             <label htmlFor="firstName" className="form-label">
               First Name
@@ -45,6 +47,7 @@ export const CheckoutForm = () => {
               }}
             />
           </div>
+          {/* Last Name Input */}
           <div className="col-md-6">
             <label htmlFor="lastName" className="form-label">
               Last Name
@@ -61,6 +64,7 @@ export const CheckoutForm = () => {
               }}
             />
           </div>
+          {/* Email Input */}
           <div className="col-md-6">
             <label htmlFor="email" className="form-label">
               Email
@@ -77,7 +81,7 @@ export const CheckoutForm = () => {
               }}
             />
           </div>
-
+          {/* Phone Input */}
           <div className="col-md-6">
             <label htmlFor="phone" className="form-label">
               Phone
@@ -94,7 +98,7 @@ export const CheckoutForm = () => {
               }}
             />
           </div>
-
+          {/* Address Input */}
           <div className="col-md-6">
             <label htmlFor="address" className="form-label">
               Address
@@ -111,6 +115,7 @@ export const CheckoutForm = () => {
               }}
             />
           </div>
+          {/* Place Input */}
           <div className="col-md-4">
             <label htmlFor="place" className="form-label">
               Place
@@ -127,7 +132,7 @@ export const CheckoutForm = () => {
               }}
             />
           </div>
-
+          {/* Zipcode Input */}
           <div className="col-md-2">
             <label htmlFor="zipCode" className="form-label">
               Zip code
@@ -145,17 +150,11 @@ export const CheckoutForm = () => {
             />
           </div>
 
+          {/* Stipe payment */}
           <StripeComponent data={data} setData={setData} ref={stripeRef} />
 
-          {data.errors.length !== 0 && (
-            <div className="container-fluid alert alert-danger pb-0 my-2">
-              <ul className="">
-                {data.errors.map((error, key) => {
-                  return <li key={key}>{error}</li>;
-                })}
-              </ul>
-            </div>
-          )}
+          {/* Error messages */}
+          <ErrorList errors={data.errors} />
         </form>
       </div>
     </div>

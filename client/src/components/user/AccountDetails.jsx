@@ -17,9 +17,11 @@ export const AccountDetails = () => {
     <div className="container card my-5">
       <h1 className="display-5 mt-2">My account</h1>
       <hr />
-      <button className="btn btn-warning col-1 my-2" onClick={logout}>
-        Logout
-      </button>
+      <div className="col-1">
+        <button className="btn btn-warning my-2" onClick={logout}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

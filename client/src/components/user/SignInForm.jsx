@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TokenContext } from "../../App";
+import { ErrorList } from "../errors/ErrorList";
 
 export const SignInForm = () => {
   const { setToken } = useContext(TokenContext);
@@ -17,52 +18,70 @@ export const SignInForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios.defaults.headers.common["Authorization"] = "";
+    setUser({ ...user, errors: [] });
 
-    localStorage.removeItem("token");
+    if (user.username === "") {
+      setUser((previousData) => ({
+        ...previousData,
+        errors: previousData.errors.concat("Please insert an username"),
+      }));
+    }
 
-    const formData = {
-      username: user.username,
-      password: user.password,
-    };
+    if (user.password === "") {
+      setUser((previousData) => ({
+        ...previousData,
+        errors: previousData.errors.concat("Please insert a password"),
+      }));
+    }
 
-    try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/api/v1/token/login/`,
-        formData
-      );
+    if (user.errors.length === 0) {
+      axios.defaults.headers.common["Authorization"] = "";
 
-      if (response.status === 200) {
-        const responseToken = response.data.auth_token;
+      localStorage.removeItem("token");
 
-        setToken(responseToken);
+      const formData = {
+        username: user.username,
+        password: user.password,
+      };
 
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Token ${responseToken}`;
+      try {
+        const response = await axios.post(
+          `http://127.0.0.1:8000/api/v1/token/login/`,
+          formData
+        );
 
-        localStorage.setItem("token", responseToken);
+        if (response.status === 200) {
+          const responseToken = response.data.auth_token;
 
-        navigate("/");
-      }
-    } catch (err) {
-      if (err.response) {
-        for (const property in err.response.data) {
+          setToken(responseToken);
+
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Token ${responseToken}`;
+
+          localStorage.setItem("token", responseToken);
+
+          navigate("/");
+        }
+      } catch (err) {
+        if (err.response) {
+          for (const property in err.response.data) {
+            setUser((previousData) => ({
+              ...previousData,
+              errors: previousData.errors.concat(
+                `${property}: ${err.response.data[property]}`
+              ),
+            }));
+          }
+        } else {
           setUser((previousData) => ({
             ...previousData,
             errors: previousData.errors.concat(
-              `${property}: ${err.response.data[property]}`
+              "There was an error. Please try again"
             ),
           }));
+          console.log(err.data);
         }
-      } else {
-        setUser((previousData) => ({
-          ...previousData,
-          errors: previousData.errors.concat(
-            "There was an error. Please try again"
-          ),
-        }));
-        console.log(err.data);
       }
     }
   };
@@ -111,6 +130,9 @@ export const SignInForm = () => {
             <label htmlFor="password">Password</label>
           </div>
         </div>
+
+        {/* Error messages */}
+        <ErrorList errors={user.errors} />
 
         {/* Submit Button */}
         <div className="container-fluid text-center my-2">
