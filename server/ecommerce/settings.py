@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(config("SECRET_KEY"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [str(config("ALLOWED_HOST"))]
 
 STRIPE_SECRET_KEY = str(config("STRIPE_SECRET_KEY"))
 
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    str(config("CLIENT_URL")),
 ]
 
 MIDDLEWARE = [
@@ -91,8 +91,12 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": str(config("DB_NAME")),
+        "HOST": str(config("DB_HOST")),
+        "USER": str(config("DB_USER")),
+        "PASSWORD": str(config("DB_PASSWORD")),
+        "PORT": str(config("DB_PORT")),
     }
 }
 

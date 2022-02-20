@@ -12,6 +12,7 @@ pillow = "*"
 stripe = "*"
 python-dotenv = "*"
 python-decouple = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
