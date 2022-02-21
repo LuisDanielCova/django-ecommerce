@@ -6,7 +6,11 @@ export const SingleProduct = ({ product }) => {
 
   return (
     <div className="col-xl-3 my-2">
-      <img className="img-thumbnail" src={product.get_thumbnail} alt="" />
+      <img
+        className="img-thumbnail"
+        src={`https://the-wardrobe-server.herokuapp.com${product.get_thumbnail}`}
+        alt=""
+      />
       <p className="lead">
         <strong>{product.name}</strong>
       </p>

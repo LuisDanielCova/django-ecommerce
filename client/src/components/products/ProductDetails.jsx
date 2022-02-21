@@ -51,7 +51,7 @@ export const ProductDetails = () => {
           <div className="col-6">
             <p className="fs-1">{product.name}</p>
             <img
-              src={product.get_image}
+              src={`https://the-wardrobe-server.herokuapp.com${product.get_image}`}
               className="img-thumbnail"
               width={400}
               alt=""
