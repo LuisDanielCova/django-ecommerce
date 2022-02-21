@@ -13,6 +13,7 @@ stripe = "*"
 python-dotenv = "*"
 python-decouple = "*"
 psycopg2-binary = "*"
+psycopg2 = "*"
 
 [dev-packages]
 

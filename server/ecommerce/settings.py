@@ -27,7 +27,10 @@ SECRET_KEY = str(config("SECRET_KEY"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(config("DJANGO_DEBUG")) != "False"
 
-ALLOWED_HOSTS = [str(config("ALLOWED_HOST"))]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "the-wardrobe-server.herokuapp.com",
+]
 
 STRIPE_SECRET_KEY = str(config("STRIPE_SECRET_KEY"))
 
