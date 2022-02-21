@@ -31,10 +31,12 @@ export const CategoryProducts = () => {
     <div className="container my-5">
       <h1 className="display-5">{category && category.name} Products</h1>
       <hr />
-      {category &&
-        category.products.map((product) => {
-          return <SingleProduct key={product.id} product={product} />;
-        })}
+      <div className="row">
+        {category &&
+          category.products.map((product) => {
+            return <SingleProduct key={product.id} product={product} />;
+          })}
+      </div>
       <p className="lead">{message}</p>
     </div>
   );
