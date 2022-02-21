@@ -11,7 +11,7 @@
 
 # Description
 
-[![E-Commerce Screenshot][product-screenshot]](https://clever-kirch-3c5ec1.netlify.app/)
+[![E-Commerce Screenshot][product-screenshot]](https://the-wardrobe.netlify.app/)
 
 This is a simple e-commerce made using the Django REST framework, users can enter the site, order products and make a payment with a credit card. The Stripe API was used for the payment method.
 
