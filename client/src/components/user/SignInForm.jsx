@@ -46,7 +46,7 @@ export const SignInForm = () => {
 
       try {
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/v1/token/login/`,
+          `https://the-wardrobe-server.herokuapp.com/api/v1/token/login/`,
           formData
         );
 

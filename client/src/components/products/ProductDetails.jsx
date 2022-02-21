@@ -14,7 +14,7 @@ export const ProductDetails = () => {
   useEffect(() => {
     const getProduct = async () => {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/v1/products/${category_slug}/${product_slug}/`
+        `https://the-wardrobe-server.herokuapp.com/api/v1/products/${category_slug}/${product_slug}/`
       );
       setProduct(response.data);
     };

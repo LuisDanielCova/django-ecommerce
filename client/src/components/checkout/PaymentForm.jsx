@@ -117,7 +117,7 @@ export const PaymentForm = forwardRef(({ data, setData }, ref) => {
               stripe_token: id,
             };
             const response = await axios.post(
-              "http://127.0.0.1:8000/api/v1/checkout/",
+              "https://the-wardrobe-server.herokuapp.com/api/v1/checkout/",
               newData
             );
 

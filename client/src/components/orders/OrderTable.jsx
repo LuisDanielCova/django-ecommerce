@@ -11,7 +11,9 @@ export const OrderTable = () => {
   useEffect(() => {
     const getOrders = async () => {
       axios.defaults.headers.common["Authorization"] = "Token " + token;
-      const response = await axios.get(`http://127.0.0.1:8000/api/v1/orders/`);
+      const response = await axios.get(
+        `https://the-wardrobe-server.herokuapp.com/api/v1/orders/`
+      );
       console.log(response.data);
       setOrders(response.data);
     };

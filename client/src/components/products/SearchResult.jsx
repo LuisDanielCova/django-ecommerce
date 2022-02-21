@@ -17,7 +17,7 @@ export const SearchResult = () => {
   useEffect(() => {
     const getResults = async () => {
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/v1/products/search/`,
+        `https://the-wardrobe-server.herokuapp.com/api/v1/products/search/`,
         { query: query }
       );
       if (response.data.length > 0) {

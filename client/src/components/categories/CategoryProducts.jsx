@@ -12,7 +12,7 @@ export const CategoryProducts = () => {
   useEffect(() => {
     const getCategory = async () => {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/v1/categories/${category_slug}`
+        `https://the-wardrobe-server.herokuapp.com/api/v1/categories/${category_slug}`
       );
       setCategory(response.data);
     };

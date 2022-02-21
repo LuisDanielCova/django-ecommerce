@@ -8,7 +8,7 @@ export const CategoryList = () => {
   useEffect(() => {
     const getCategories = async () => {
       const response = await axios.get(
-        `http://127.0.0.1:8000/api/v1/categories/`
+        `https://the-wardrobe-server.herokuapp.com/api/v1/categories/`
       );
       setCategories(response.data);
     };
