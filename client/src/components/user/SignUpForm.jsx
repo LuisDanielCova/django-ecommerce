@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorList } from "../errors/ErrorList";
+import { Loading } from "../layout/Loading";
 
 export const SignUpForm = () => {
   const navigate = useNavigate();
@@ -13,8 +14,12 @@ export const SignUpForm = () => {
     errors: [],
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     setNewUser({ ...newUser, errors: [] });
 
@@ -75,6 +80,7 @@ export const SignUpForm = () => {
         }
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -138,6 +144,10 @@ export const SignUpForm = () => {
             <label htmlFor="confirmPassword">Confirm Password</label>
           </div>
         </div>
+
+        {/* Loading Message */}
+        <Loading isLoading={isLoading} />
+
         {/* Error Messages */}
         <ErrorList errors={newUser.errors} />
 
@@ -146,6 +156,7 @@ export const SignUpForm = () => {
             type="submit"
             value="Sign Up"
             className="btn btn-warning btn-lg"
+            disabled={isLoading ? true : false}
           />
         </div>
       </form>

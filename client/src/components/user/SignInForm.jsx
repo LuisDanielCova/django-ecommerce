@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TokenContext } from "../../App";
 import { ErrorList } from "../errors/ErrorList";
+import { Loading } from "../layout/Loading";
 
 export const SignInForm = () => {
   const { setToken } = useContext(TokenContext);
@@ -15,8 +16,12 @@ export const SignInForm = () => {
     errors: [],
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     setUser({ ...user, errors: [] });
 
@@ -84,6 +89,8 @@ export const SignInForm = () => {
         }
       }
     }
+
+    setIsLoading(false);
   };
   return (
     <div className="container my-5">
@@ -131,6 +138,9 @@ export const SignInForm = () => {
           </div>
         </div>
 
+        {/* Loading Message */}
+        <Loading isLoading={isLoading} />
+
         {/* Error messages */}
         <ErrorList errors={user.errors} />
 
@@ -140,6 +150,7 @@ export const SignInForm = () => {
             type="submit"
             value="Sign In"
             className="btn btn-warning btn-lg"
+            disabled={isLoading ? true : false}
           />
         </div>
       </form>
