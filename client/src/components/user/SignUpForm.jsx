@@ -47,7 +47,7 @@ export const SignUpForm = () => {
 
       try {
         const response = await axios.post(
-          `https://the-wardrobe-server.herokuapp.com/api/v1/users/`,
+          `${process.env.REACT_APP_SERVER_URL}/users/`,
           formData
         );
 

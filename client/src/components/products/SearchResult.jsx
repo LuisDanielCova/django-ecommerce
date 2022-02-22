@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { Loading } from "../layout/Loading";
 import { SingleProduct } from "../products/SingleProduct";
 
 export const SearchResult = () => {
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState([]);
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
 
@@ -16,8 +18,10 @@ export const SearchResult = () => {
 
   useEffect(() => {
     const getResults = async () => {
+      setIsLoading(true);
+
       const response = await axios.post(
-        `https://the-wardrobe-server.herokuapp.com/api/v1/products/search/`,
+        `${process.env.REACT_APP_SERVER_URL}/products/search/`,
         { query: query }
       );
       if (response.data.length > 0) {
@@ -25,6 +29,7 @@ export const SearchResult = () => {
       } else {
         setMessage("There are no products with that name");
       }
+      setIsLoading(false);
     };
 
     if (query !== "") {
@@ -39,6 +44,7 @@ export const SearchResult = () => {
       <div className="row">
         <h2 className="display-5 text-center fw-normal">Search Results</h2>
         <hr />
+        <Loading isLoading={isLoading} />
         {products &&
           products.map((product) => {
             return <SingleProduct key={product.id} product={product} />;

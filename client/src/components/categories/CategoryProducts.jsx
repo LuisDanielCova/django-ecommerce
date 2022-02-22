@@ -1,20 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Loading } from "../layout/Loading";
 import { SingleProduct } from "../products/SingleProduct";
 
 export const CategoryProducts = () => {
   const [category, setCategory] = useState();
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { category_slug } = useParams();
 
   useEffect(() => {
     const getCategory = async () => {
+      setIsLoading(true);
       const response = await axios.get(
-        `https://the-wardrobe-server.herokuapp.com/api/v1/categories/${category_slug}`
+        `${process.env.REACT_APP_SERVER_URL}/categories/${category_slug}`
       );
       setCategory(response.data);
+      setIsLoading(false);
     };
 
     getCategory();
@@ -31,6 +35,7 @@ export const CategoryProducts = () => {
     <div className="container my-5">
       <h1 className="display-5">{category && category.name} Products</h1>
       <hr />
+      <Loading isLoading={isLoading} />
       <div className="row">
         {category &&
           category.products.map((product) => {

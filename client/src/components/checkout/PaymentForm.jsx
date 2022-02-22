@@ -1,9 +1,15 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
-import React, { forwardRef, useContext, useImperativeHandle } from "react";
+import React, {
+  forwardRef,
+  useContext,
+  useImperativeHandle,
+  useState,
+} from "react";
 import "./PaymentForm.css";
 import { CartContext } from "../../App";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "../layout/Loading";
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -30,10 +36,13 @@ export const PaymentForm = forwardRef(({ data, setData }, ref) => {
   const elements = useElements();
   const navigate = useNavigate();
   const { cart } = useContext(CartContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   useImperativeHandle(ref, () => ({
     async handleSubmit(e) {
       e.preventDefault();
+
+      setIsLoading(true);
 
       setData({ ...data, errors: [] });
 
@@ -117,7 +126,7 @@ export const PaymentForm = forwardRef(({ data, setData }, ref) => {
               stripe_token: id,
             };
             const response = await axios.post(
-              "https://the-wardrobe-server.herokuapp.com/api/v1/checkout/",
+              `${process.env.REACT_APP_SERVER_URL}/checkout/`,
               newData
             );
 
@@ -140,6 +149,8 @@ export const PaymentForm = forwardRef(({ data, setData }, ref) => {
           }));
         }
       }
+
+      setIsLoading(false);
     },
   }));
 
@@ -150,7 +161,12 @@ export const PaymentForm = forwardRef(({ data, setData }, ref) => {
           <CardElement options={CARD_OPTIONS} />
         </div>
       </fieldset>
-      <button type="submit" className="btn btn-warning">
+      <Loading isLoading={isLoading} />
+      <button
+        type="submit"
+        className="btn btn-warning"
+        disabled={isLoading ? true : false}
+      >
         Pay
       </button>
     </div>

@@ -26,6 +26,8 @@ function App() {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_SERVER_URL);
+
     if (localStorage.getItem("cart")) {
       setCart(JSON.parse(localStorage.getItem("cart")));
     } else {

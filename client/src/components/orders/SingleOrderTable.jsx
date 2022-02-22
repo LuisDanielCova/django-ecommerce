@@ -6,6 +6,7 @@ export const SingleOrderTable = ({ order }) => {
   useEffect(() => {
     const orderDate = new Date(order.created_at);
     setDate(orderDate.toLocaleDateString());
+    //eslint-disable-next-line
   }, []);
 
   return (
